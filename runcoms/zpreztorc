@@ -32,10 +32,10 @@ zstyle ':prezto:load' pmodule \
   'python' \
   'utility' \
   'completion' \
-  'prompt' \
   'history-substring-search' \
-  'git'
-
+  'git' \
+  'prompt'   
+  
 
 #
 # Editor
