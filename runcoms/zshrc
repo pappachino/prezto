@@ -17,3 +17,4 @@ alias tmn='tmux new -s $(basename $(pwd))'
 alias tml='tmux list-sessions'
 
 alias ltr='ls -ltra'
+alias emacs='emacsclient -t'
