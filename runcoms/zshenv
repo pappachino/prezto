@@ -9,3 +9,12 @@
 if [[ ( "$SHLVL" -eq 1 && ! -o LOGIN ) && -s "${ZDOTDIR:-$HOME}/.zprofile" ]]; then
   source "${ZDOTDIR:-$HOME}/.zprofile"
 fi
+
+export GOPATH=$HOME/go
+
+export EDITOR=emacs
+
+export AWS_PROFILE=nonprod
+
+# terraform plugin cache dir
+export TF_PLUGIN_CACHE_DIR="$HOME/.terraform.d/plugin-cache"

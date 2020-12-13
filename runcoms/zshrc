@@ -11,3 +11,54 @@ if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
 fi
 
 # Customize to your needs...
+
+# ================================================================================
+# For the prompt we'll use the powerline-go
+# instead of the prompts by prezto
+# ================================================================================
+function powerline_precmd() {
+  PS1="$($GOPATH/bin/powerline-go \
+        -hostname-only-if-ssh \
+        -newline -max-width 95 \
+        -modules 'time,host,ssh,cwd,perms,git,venv,terraform-workspace,jobs,exit,root' \
+        -shell zsh)"
+}
+
+function install_powerline_precmd() {
+  for s in "${precmd_functions[@]}"; do
+    if [ "$s" = "powerline_precmd" ]; then
+      return
+    fi
+  done
+  precmd_functions+=(powerline_precmd)
+}
+
+if [ "$TERM" != "linux" ]; then
+  install_powerline_precmd
+fi
+
+# ================================================================================
+# Load custom aliases
+# ================================================================================
+source ~/.zaliases
+
+# ================================================================================
+# Fancy git diff with preview per file
+# ================================================================================
+fd() {
+  preview="git diff $@ --color=always -- {-1}"
+  git diff $@ --name-only | fzf -m --ansi --preview $preview
+
+}
+
+autoload -U +X bashcompinit && bashcompinit
+complete -o nospace -C '/usr/local/bin/terraform' terraform
+complete -C '/usr/local/bin/aws_completer' aws
+
+# ================================================================================
+# NOTE : This needs to be at the end
+# ================================================================================
+# enable shims and autocompletion
+export PATH="~/.pyenv/bin:$PATH"
+eval "$(pyenv init -)"
+eval "$(pyenv virtualenv-init -)"
